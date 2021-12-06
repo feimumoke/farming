@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: node-deployment
+spec:
+ selector:
+  matchLabels:
+   app: node
+ replicas: 2
+ template:
+  metadata:
+   labels:
+    app: node
+  spec:
+   containers:
+   - name: node
+     image: feimumoke/first:v2
+     ports:
+     - containerPort: 8082

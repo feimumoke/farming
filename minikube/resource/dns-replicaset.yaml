@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: dnsutil-rs
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+   app: dnsutil
+ template:
+  metadata:
+   labels:
+    app: dnsutil
+  spec:
+   containers:
+   - name: dnsutil
+     image: tutum/dnsutils
+     command: ["sleep", "infinity"]
