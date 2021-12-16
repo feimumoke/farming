@@ -1,0 +1,25 @@
+syntax = "proto3";
+package service;
+option go_package = "./api/service";
+import "google/api/annotations.proto";
+
+
+service FarmService {
+  rpc PlantTree(PlantTreeReq) returns(PlantTreeRsp){
+    option (google.api.http) = {
+      post: "/FarmService/PlantTree"
+      body: "*"
+    };
+  }
+}
+
+message PlantTreeReq{
+  string UserId = 1;
+  string GroundId = 2;
+  string TreeKind = 3;
+  int64 TreeNum = 4;
+}
+
+message PlantTreeRsp {
+  string Result = 1;
+}

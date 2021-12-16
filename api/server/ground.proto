@@ -19,7 +19,8 @@ message GroundReq{
 }
 
 message GroundRsp {
-  string Position = 1;
-  string Owner = 2;
-  int64 Price = 3;
+  string GroundId = 1;
+  string Position = 2;
+  string Owner = 3;
+  int64 Price = 4;
 }
