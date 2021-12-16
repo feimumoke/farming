@@ -1,0 +1,23 @@
+syntax = "proto3";
+package service;
+option go_package = "./api/service";
+import "google/api/annotations.proto";
+
+
+service IdentifyService {
+  rpc Register(RegisterReq) returns(RegisterRsp){
+    option (google.api.http) = {
+      post: "/IdentifyService/Register"
+      body: "*"
+    };
+  }
+}
+
+message RegisterReq{
+  string Name = 1;
+  string PassWord = 2;
+}
+
+message RegisterRsp {
+  string Result = 1;
+}
