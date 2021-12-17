@@ -5,7 +5,7 @@ import (
 	"errors"
 	"feimumoke/farming/v2/api/server"
 	"feimumoke/farming/v2/api/service"
-	"feimumoke/farming/v2/framwork/util"
+	"feimumoke/farming/v2/framework/util"
 	"sync"
 	"time"
 )
@@ -17,6 +17,7 @@ type Farmer struct {
 }
 
 type IdentifySvr struct {
+	*service.UnimplementedIdentifyServiceServer
 	farmerSv server.FarmerServiceClient
 	groundSv server.GroundServiceClient
 	userMap  sync.Map
@@ -28,7 +29,7 @@ func (i IdentifySvr) Register(ctx context.Context, req *service.RegisterReq) (*s
 		if req.PassWord != farmer.password {
 			return nil, errors.New("user name or password not right")
 		}
-		return &service.RegisterRsp{Result: "ExistUser:" + util.StructToString(user)}, nil
+		return &service.RegisterRsp{Result: "ExistUser:" + util.StructToString(user) + ":" + util.GetHostString()}, nil
 	}
 	farmer, err := i.farmerSv.SelectFarmer(ctx, &server.FarmerReq{
 		Name:     req.Name,
@@ -49,10 +50,6 @@ func (i IdentifySvr) Register(ctx context.Context, req *service.RegisterReq) (*s
 		initTime: time.Now().Format(util.DefaultTimeLayOut),
 		password: req.PassWord,
 	})
-	return &service.RegisterRsp{Result: util.StructToString(farmer) + "##" + util.StructToString(ground)}, nil
+	return &service.RegisterRsp{Result: util.StructToString(farmer) + "##" + util.StructToString(ground) + ":" + ":" + util.GetHostString()}, nil
 
-}
-
-func (i IdentifySvr) mustEmbedUnimplementedIdentifyServiceServer() {
-	panic("implement me")
 }
