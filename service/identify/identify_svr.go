@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+func NewIdentifySvr() *IdentifySvr {
+	return &IdentifySvr{}
+}
+
 type Farmer struct {
 	name     string
 	initTime string

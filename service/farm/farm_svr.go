@@ -7,6 +7,10 @@ import (
 	"feimumoke/farming/v2/framework/util"
 )
 
+func NewFarmSvr() *FarmSvr {
+	return &FarmSvr{}
+}
+
 type FarmSvr struct {
 	*service.UnimplementedFarmServiceServer
 	farmerSv server.FarmerServiceClient
