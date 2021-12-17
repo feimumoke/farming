@@ -1,0 +1,34 @@
+resources:
+  - ../../base
+patches:
+  - path: deploy_env_vars.yaml
+    target:
+      kind: Deployment
+  - path: deploy_liveness_probe.yaml
+    target:
+      kind: Deployment
+  - path: deploy_readiness_probe.yaml
+    target:
+      kind: Deployment
+  - path: replica.yaml
+    target:
+      kind: Deployment
+  - path: deploy_ports.yaml
+    target:
+      kind: Deployment
+  - path: deploy_resource.yaml
+    target:
+      kind: Deployment
+  - path: deploy_lifecycle.yaml
+    target:
+      kind: Deployment
+  - path: deploy_hostalias.yaml
+    target:
+      kind: Deployment
+  - path: service_ports.yaml
+    target:
+      kind: Service
+  - path: service_cluster.yaml
+    target:
+      kind: Service
+

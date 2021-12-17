@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: not-important
+spec:
+  template:
+    spec:
+      containers:
+        - name: ${PROJECT_NAME} #<service.name>
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh","-c","sleep 2" ]

@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: not-important
+spec:
+  template:
+    spec:
+      containers:
+        - name: ${PROJECT_NAME} #<service.name>
+          livenessProbe:
+            tcpSocket:
+              port: 28086 #<api.grpc.port>
+            initialDelaySeconds: 10
+            periodSeconds: 5

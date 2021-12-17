@@ -1,5 +1,5 @@
 FROM golang:1.14 as builder
-
+## docker build -t xxx .
 WORKDIR /go/grpc-gateway
 
 RUN go env -w GO111MODULE=on \
@@ -16,6 +16,11 @@ RUN apt-get update\
            google.golang.org/protobuf/cmd/protoc-gen-go \
            google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
+RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash \
+   && chmod +x kustomize \
+   && mv kustomize /usr/local/bin/
 
 
-(x-12/2)*1+(x-10)
+RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-`uname -s`-`uname -m` -o envsubst \
+    && chmod +x envsubst \
+    && sudo mv envsubst /usr/local/bin

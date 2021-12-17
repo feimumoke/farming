@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "${PROJECT_NAME}"
+  labels:
+    app: "${PROJECT_NAME}"
+  namespace: farming
+
+spec:
+  selector:
+    matchLabels:
+      app: "${PROJECT_NAME}"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 20%
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app: "${PROJECT_NAME}"
+    spec:
+      containers:
+        - name: "${PROJECT_NAME}"
+          image: feimumoke:"${PROJECT_NAME}"
+
+

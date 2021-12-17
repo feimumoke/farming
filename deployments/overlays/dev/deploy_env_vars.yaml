@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: not-important
+spec:
+  template:
+    spec:
+      containers:
+        - name: ${PROJECT_NAME} #<service.name>
+          env:
+            - name: DOMAIN
+              value: dev #<env -domain>
+            - name: APP_VERSION
+              value: ${APP_VERSION} #"APP_VERSION"
