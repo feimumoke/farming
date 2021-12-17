@@ -73,13 +73,13 @@ clean:
 
 local-start: local
 	@echo "start server local"
-	@cd ./target/$(PROJECT_NAME)/ ; sh ./scripts/start.sh
+	@cd ./target/$(PROJECT_NAME)/ ; sh ./bin/start.sh
 
 local-integration-test:local
 	@echo "run local integration test "
-	@cd ./target/$(PROJECT_NAME)/;nohup ./scripts/start.sh > /tmp/$(PROJECT_NAME)_test.log &
+	@cd ./target/$(PROJECT_NAME)/;nohup ./bin/start.sh > /tmp/$(PROJECT_NAME)_test.log &
 	@cd .;go test -v $$(go list ./...| grep -v /vendor/)
-	@cd ./target/$(PROJECT_NAME)/; ./scripts/stop.sh
+	@cd ./target/$(PROJECT_NAME)/; ./bin/stop.sh
 	@rm /tmp/${PROJECT_NAME}_test.log
 
 dk-local:
