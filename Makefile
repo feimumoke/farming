@@ -65,7 +65,7 @@ docker-run: docker-image
 	docker run -p ${GRPC_PORT}:${GRPC_PORT} -p ${SWAGGER_PORT}:${SWAGGER_PORT} -p ${HTTP_PORT}:${HTTP_PORT} -p ${QCLOUDAPI_PORT}:${QCLOUDAPI_PORT} -it feimumoke/${PROJECT_NAME}
 
 docker-up: docker-image
-	@echo "run docker by docker-compose integrated with other services[redis,mysql,consul...]"
+	@echo "run docker by docker-compose integrated with other services"
 	@docker-compose up -d
 
 clean:
