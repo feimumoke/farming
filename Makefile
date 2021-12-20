@@ -2,7 +2,7 @@ include .env
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
 ifndef PROJECT_NAME
-	@echo "no"
+	@echo "no PROJECT_NAME"
 endif
 
 default: local
@@ -51,6 +51,11 @@ ci:
 manifests:
 	@echo "Generate manifests"
 	sh ./build/kustomize.sh
+	sh ./build/manifests_rename.sh
+
+docker-manifests:
+	@echo "Generate manifests"
+	sh ./build/kustomize.sh -d yes
 	sh ./build/manifests_rename.sh
 
 unit-test:
