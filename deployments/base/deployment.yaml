@@ -22,6 +22,6 @@ spec:
     spec:
       containers:
         - name: ${PROJECT_NAME}
-          image: feimumoke:${PROJECT_NAME}
+          image: feimumoke/${PROJECT_NAME}
 
 

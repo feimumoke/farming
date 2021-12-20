@@ -4,5 +4,5 @@ resources:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
-  - name: feimumoke:${PROJECT_NAME}
-    newName: feimumoke:${PROJECT_NAME}
+  - name: feimumoke/${PROJECT_NAME}
+    newName: feimumoke/${PROJECT_NAME}
