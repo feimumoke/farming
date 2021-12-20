@@ -45,8 +45,6 @@ ci:
 	sh ./build/manifests_update_image.sh "$(PROJECT_NAME)" "$(VERSION)"
 	@echo "ci build in standard env"
 	sh ./build/build.sh -v enable
-	@echo 'Insert VERSION into generated deployment.yaml for each pipeline'
-	sh ./build/manifests_version_subst.sh
 
 manifests:
 	@echo "Generate manifests"
