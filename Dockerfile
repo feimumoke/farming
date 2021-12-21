@@ -14,6 +14,11 @@ EXPOSE $GRPC_PORT
 EXPOSE $HTTP_PORT
 
 WORKDIR /usr/local/services/$PROJECT_NAME
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      curl
+
 RUN chmod +x ./bin/start.sh && sync
 
 CMD ["bin/start.sh", "$PROJECT_NAME"]
