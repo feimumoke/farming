@@ -1,8 +1,10 @@
 include .env
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
+# make manifests fm=SV1
+$(eval $(shell echo export PROJECT_NAME=$($(fm))))
 ifndef PROJECT_NAME
-	@echo "no PROJECT_NAME"
+	$(eval $(shell echo "no project name"))
 endif
 
 default: local
