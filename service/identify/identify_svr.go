@@ -6,6 +6,7 @@ import (
 	"feimumoke/farming/v2/api/server"
 	"feimumoke/farming/v2/api/service"
 	"feimumoke/farming/v2/framework/util"
+	"google.golang.org/grpc/grpclog"
 	"sync"
 	"time"
 )
@@ -43,6 +44,7 @@ func (i IdentifySvr) Register(ctx context.Context, req *service.RegisterReq) (*s
 		PassWord: req.PassWord,
 	})
 	if err != nil {
+		grpclog.Errorf("SelectFarmer err %v", err)
 		return nil, err
 	}
 	ground, err := i.groundSv.SelectGround(ctx, &server.GroundReq{
@@ -50,6 +52,7 @@ func (i IdentifySvr) Register(ctx context.Context, req *service.RegisterReq) (*s
 		Owner: req.Name,
 	})
 	if err != nil {
+		grpclog.Errorf("SelectGround err %v", err)
 		return nil, err
 	}
 	i.userMap.Store(req.Name, &Farmer{

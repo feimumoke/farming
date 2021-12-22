@@ -5,7 +5,6 @@ import (
 	"feimumoke/farming/v2/api/service"
 	"feimumoke/farming/v2/framework"
 	"feimumoke/farming/v2/framework/boot"
-	"feimumoke/farming/v2/service/farm"
 	"feimumoke/farming/v2/service/identify"
 	"flag"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -34,7 +33,7 @@ func bootstrap() error {
 		service.RegisterIdentifyServiceServer(s, identify.NewIdentifySvr())
 	})
 	strap.RegisterGateWayFunc(framework.NetGwPort, framework.NetGrpcPort, service.RegisterIdentifyServiceHandlerFromEndpoint)
-	farm.InitGrpcClient()
+	identify.InitGrpcClient()
 	s := strap.Bootstrap()
 	s(2 * time.Second)
 	return nil

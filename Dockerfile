@@ -20,6 +20,7 @@ RUN apt-get update && \
       curl \
       dnsutils
 
+RUN mkdir /var/log/farming && chmod 777 /var/log/farming
 RUN chmod +x ./bin/start.sh && sync
 
 CMD ["bin/start.sh", "$PROJECT_NAME"]

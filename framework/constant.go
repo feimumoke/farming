@@ -17,11 +17,11 @@ const (
 )
 
 const (
-	SERVER_FRAMER_TARGET  = "dns:///server-farmer.default.svc.cluster.local"
+	SERVER_FRAMER_TARGET  = "dns:///server-farmer.default.svc.cluster.local:" + NetGrpcPort
 	SERVER_FRAMER_PROJECT = "server-farmer"
 	SERVER_FRAMER_SERVICE = "farmer"
 
-	SERVER_GROUND_TARGET  = "dns:///server-ground.default.svc.cluster.local"
+	SERVER_GROUND_TARGET  = "dns:///server-ground.default.svc.cluster.local:" + NetGrpcPort
 	SERVER_GROUND_PROJECT = "server-ground"
 	SERVER_GROUND_SERVICE = "ground"
 )

@@ -56,6 +56,10 @@ func NewBootstrapper() *Bootstrapper {
 	b := &Bootstrapper{mutex: sync.Mutex{}}
 	b.grpcEntities = make(map[string]*grpcEntity)
 	b.httpEntities = make(map[string]*httpEntity)
+	AppCtx = &AppContext{
+		grpcClients: &grpc_util.GRPCClients{Clients: make(map[string]interface{}), Mutex: sync.Mutex{}},
+		boot:        b,
+	}
 	return b
 }
 
@@ -67,10 +71,6 @@ func (b *Bootstrapper) Bootstrap() func(duration time.Duration) {
 	grpclog.Infof("start to init http")
 	b.bootGateway()
 	grpclog.Infof("Bootstrap success")
-	AppCtx = &AppContext{
-		grpcClients: &grpc_util.GRPCClients{Clients: make(map[string]interface{}), Mutex: sync.Mutex{}},
-		boot:        b,
-	}
 	return b.shutdown
 }
 
