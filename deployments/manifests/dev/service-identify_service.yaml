@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/namespace: farming
+  labels:
+    app: service-identify
+  name: service-identify
+  namespace: farming
+spec:
+  ports:
+  - name: grpc-port
+    port: 28086
+    protocol: TCP
+    targetPort: 28086
+  - name: http-port
+    port: 28088
+    protocol: TCP
+    targetPort: 28088
+  selector:
+    app: service-identify
+  type: LoadBalancer
