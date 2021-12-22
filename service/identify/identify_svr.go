@@ -11,7 +11,10 @@ import (
 )
 
 func NewIdentifySvr() *IdentifySvr {
-	return &IdentifySvr{}
+	return &IdentifySvr{
+		farmerSv: GrpcCli.FarmerClient,
+		groundSv: GrpcCli.GroundClient,
+	}
 }
 
 type Farmer struct {

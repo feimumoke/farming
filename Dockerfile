@@ -17,7 +17,8 @@ WORKDIR /usr/local/services/$PROJECT_NAME
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      curl
+      curl \
+      dnsutils
 
 RUN chmod +x ./bin/start.sh && sync
 

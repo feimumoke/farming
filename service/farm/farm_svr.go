@@ -8,7 +8,10 @@ import (
 )
 
 func NewFarmSvr() *FarmSvr {
-	return &FarmSvr{}
+	return &FarmSvr{
+		farmerSv: GrpcCli.FarmerClient,
+		groundSv: GrpcCli.GroundClient,
+	}
 }
 
 type FarmSvr struct {

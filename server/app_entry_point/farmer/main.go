@@ -4,6 +4,7 @@ import (
 	"context"
 	"feimumoke/farming/v2/api/server"
 	"feimumoke/farming/v2/framework"
+	"feimumoke/farming/v2/framework/boot"
 	"feimumoke/farming/v2/server/farmer"
 	"flag"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -11,6 +12,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"time"
 )
 
 var (
@@ -20,12 +22,20 @@ var (
 )
 
 func main() {
-	go func() {
-		runGrpc()
-	}()
-	if err := runGw(); err != nil {
+	if err := bootstrap(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func bootstrap() error {
+	boot := boot.NewBootstrapper()
+	boot.RegisterGrpcFunc(framework.NetGrpcPort, func(s *grpc.Server) {
+		server.RegisterFarmerServiceServer(s, farmer.NewFarmerSv())
+	})
+	boot.RegisterGateWayFunc(framework.NetGwPort, framework.NetGrpcPort, server.RegisterFarmerServiceHandlerFromEndpoint)
+	s := boot.Bootstrap()
+	s(2 * time.Second)
+	return nil
 }
 
 func runGw() error {

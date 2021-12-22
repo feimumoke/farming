@@ -31,3 +31,35 @@ minikube dashboard
 ss -ntulp | grep 34057
 kubectl proxy --address='0.0.0.0' --disable-filter=true
 ```
+
+```shell
+systemctl start kube-proxy
+#失败重启coredns
+[minikube@VM-0-2-centos ~]$ kubectl exec -i -t dnsutil-rs-dk5fx -- nslookup kubernetes.default
+;; connection timed out; no servers could be reached
+
+command terminated with exit code 1
+[minikube@VM-0-2-centos ~]$ kubectl -n kube-system rollout restart deployment coredns
+deployment.apps/coredns restarted
+[minikube@VM-0-2-centos ~]$ kubectl exec -i -t dnsutil-rs-dk5fx -- nslookup kubernetes.default
+Server:		10.96.0.10
+Address:	10.96.0.10#53
+
+Name:	kubernetes.default.svc.cluster.local
+Address: 10.96.0.1
+```
+
+```shell
+kubectl exec -it server-ground-5487d5f88f-6t7fb -- /bin/sh
+#
+# nslookup server-farmer
+Server:		10.96.0.10
+Address:	10.96.0.10#53
+
+Name:	server-farmer.default.svc.cluster.local
+Address: 10.107.178.182
+
+# curl -X POST server-farmer:28088/FarmerService/SelectFarmer
+{"Result":"Farmer from Server::{\"HostName\":\"server-farmer-74d5ffb5f7-6l2sk\",\"HostIp\":\"172.18.0.4\"}"}#
+#
+```
