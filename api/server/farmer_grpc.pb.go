@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FarmerServiceClient interface {
 	SelectFarmer(ctx context.Context, in *FarmerReq, opts ...grpc.CallOption) (*FarmerRsp, error)
+	HelpFarmer(ctx context.Context, in *HelpFarmerReq, opts ...grpc.CallOption) (*HelpFarmerRsp, error)
 }
 
 type farmerServiceClient struct {
@@ -38,11 +39,21 @@ func (c *farmerServiceClient) SelectFarmer(ctx context.Context, in *FarmerReq, o
 	return out, nil
 }
 
+func (c *farmerServiceClient) HelpFarmer(ctx context.Context, in *HelpFarmerReq, opts ...grpc.CallOption) (*HelpFarmerRsp, error) {
+	out := new(HelpFarmerRsp)
+	err := c.cc.Invoke(ctx, "/server.FarmerService/HelpFarmer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FarmerServiceServer is the server API for FarmerService service.
 // All implementations must embed UnimplementedFarmerServiceServer
 // for forward compatibility
 type FarmerServiceServer interface {
 	SelectFarmer(context.Context, *FarmerReq) (*FarmerRsp, error)
+	HelpFarmer(context.Context, *HelpFarmerReq) (*HelpFarmerRsp, error)
 	mustEmbedUnimplementedFarmerServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedFarmerServiceServer struct {
 
 func (UnimplementedFarmerServiceServer) SelectFarmer(context.Context, *FarmerReq) (*FarmerRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectFarmer not implemented")
+}
+func (UnimplementedFarmerServiceServer) HelpFarmer(context.Context, *HelpFarmerReq) (*HelpFarmerRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HelpFarmer not implemented")
 }
 func (UnimplementedFarmerServiceServer) mustEmbedUnimplementedFarmerServiceServer() {}
 
@@ -84,6 +98,24 @@ func _FarmerService_SelectFarmer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FarmerService_HelpFarmer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelpFarmerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FarmerServiceServer).HelpFarmer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/server.FarmerService/HelpFarmer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FarmerServiceServer).HelpFarmer(ctx, req.(*HelpFarmerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FarmerService_ServiceDesc is the grpc.ServiceDesc for FarmerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var FarmerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SelectFarmer",
 			Handler:    _FarmerService_SelectFarmer_Handler,
+		},
+		{
+			MethodName: "HelpFarmer",
+			Handler:    _FarmerService_HelpFarmer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

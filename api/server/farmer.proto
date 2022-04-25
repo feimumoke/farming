@@ -11,6 +11,12 @@ service FarmerService {
       body: "*"
     };
   }
+  rpc HelpFarmer(HelpFarmerReq) returns(HelpFarmerRsp){
+    option (google.api.http) = {
+      post: "/FarmerService/HelpFarmer"
+      body: "*"
+    };
+  }
 }
 
 message FarmerReq{
@@ -19,5 +25,14 @@ message FarmerReq{
 }
 
 message FarmerRsp {
+  string Result = 1;
+}
+
+message HelpFarmerReq{
+  string Name = 1;
+  string Method = 2;
+}
+
+message HelpFarmerRsp {
   string Result = 1;
 }
